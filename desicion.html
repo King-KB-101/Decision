@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Coin Flip Decision Maker</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        color: white;
+
+        /* Beautiful gradient themed background */
+        background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    h2 {
+        margin-top: 40px;
+        font-size: 36px;
+        text-shadow: 0 0 10px #00eaff;
+    }
+
+    h3 {
+        font-size: 22px;
+        margin-top: 10px;
+        text-shadow: 0 0 5px #ffffff88;
+    }
+
+    input {
+        padding: 10px;
+        width: 250px;
+        border-radius: 8px;
+        border: none;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    /* Coin styling */
+    .coin {
+        margin: 40px auto;
+        width: 150px;
+        height: 150px;
+        position: relative;
+        transform-style: preserve-3d;
+    }
+
+    .side {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        line-height: 150px;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        backface-visibility: hidden;
+        box-shadow: 0 0 20px #00eaff88;
+    }
+
+    .heads {
+        background: #0ea5e9;
+    }
+
+    .tails {
+        background: #ef4444;
+        transform: rotateY(180deg);
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: none;
+        background: #14b8a6;
+        color: white;
+        box-shadow: 0 0 15px #14b8a6aa;
+    }
+
+    button:hover {
+        background: #0d9488;
+    }
+
+    #result {
+        margin-top: 25px;
+        font-size: 26px;
+        font-weight: bold;
+        text-shadow: 0 0 10px #ffffffaa;
+    }
+
+    /* ChatGPT credit */
+    #credit {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        font-size: 14px;
+        opacity: 0.6;
+    }
+</style>
+</head>
+<body>
+
+<h2>Coin Flip Decision Maker</h2>
+
+<h3>Make your decision</h3>
+
+<label>Heads Option:</label><br>
+<input id="headsInput" type="text" placeholder="Enter the decision for heads"><br>
+
+<label>Tails Option:</label><br>
+<input id="tailsInput" type="text" placeholder="Enter the decision for tails"><br>
+
+<div class="coin" id="coin">
+    <div class="side heads">HEADS</div>
+    <div class="side tails">TAILS</div>
+</div>
+
+<button onclick="flipCoin()">Spin Coin</button>
+
+<div id="result"></div>
+
+
+
+<script>
+let spinCount = 0;
+
+function flipCoin() {
+    const coin = document.getElementById("coin");
+    const headsOption = document.getElementById("headsInput").value || "Heads option";
+    const tailsOption = document.getElementById("tailsInput").value || "Tails option";
+
+    // Random result
+    const isHeads = Math.random() < 0.5;
+
+    // Ensure fast spinning EVERY time
+    spinCount++;
+    const fastSpin = 1800; // full fast spins
+    const finalRotate = isHeads ? 0 : 180;
+
+    coin.style.transition = "transform 2s ease-out";
+    coin.style.transform = `rotateY(${fastSpin + finalRotate + spinCount * 360}deg)`;
+
+    setTimeout(() => {
+        document.getElementById("result").innerHTML =
+            isHeads
+            ? "Result: HEADS → " + headsOption
+            : "Result: TAILS → " + tailsOption;
+    }, 2000);
+}
+</script>
+
+</body>
+</html>
